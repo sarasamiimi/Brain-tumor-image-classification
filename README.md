@@ -1,89 +1,98 @@
-# Brain-tumor-image-classification
+Classification (Deep Learning)
 
-Brain Tumor Image Classification
-
-lightweight deep-learning web app for MRI tumor detection
-
-This project uses a fine-tuned VGG19 model to classify brain MRI images into two categories:
-“Yes Brain Tumor” or “No Brain Tumor.”
-A small Flask web app is included so users can upload an image and instantly get a prediction.
+A complete deep-learning pipeline for classifying brain tumor MRI images.
+The system uses VGG19 transfer learning, custom preprocessing, and a Flask web application that allows real-time inference directly from user-uploaded images.
 
 
------------------------------------------------------------------------------------------------------
 
-What This Project Does
+Features
 
-Loads a pretrained VGG19 network and adds custom dense layers for classification
+• Full deep-learning workflow
+Includes dataset preparation, augmentation, model training, fine-tuning, evaluation, and deployment.
 
-Processes MRI images automatically (resize → normalize → predict)
+• VGG19 Transfer Learning
+A pre-trained VGG19 network is adapted for tumor classification, improving accuracy with limited medical data.
 
-Provides an easy-to-use web interface for uploading images
+• Real-time Web App (Flask)
+Users can upload MRI images through a simple web interface and receive predictions instantly.
 
-Returns a clear text result—no complications
+• Robust preprocessing pipeline
+Images are cleaned, resized, normalized, and augmented for better generalization.
+
+• Reproducible and modular
+Training is in a Jupyter notebook, while inference is fully separated in a Flask app.
 
 
-------------------------------------------------------------------------------------------------
  
- 
- Model Summary
-
-Input: 240×240 RGB MRI image
-
-Base model: VGG19 (without top layers)
-
-Custom layers:
-
-Flatten
-
-Dense (4608, ReLU)
-
-Dropout (0.2)
-
-Dense (1152, ReLU)
-
-Output: Dense (2, Softmax)
-
-Weights are loaded from vgg_unfrozen.h5
-
- How the Web App Works
-
-The Flask app has two simple routes:
-
-/ → Shows the upload page
-
-/predict → Handles the uploaded file and returns the prediction
-
-Behind the scenes, the image is resized, converted to an array, fed into the model, and mapped to a label.
+ Project Structure
+├── app.py                       Flask web app for real-time prediction  
+├── model.h5                     Trained VGG19 model  
+├── model_training.ipynb         Training, augmentation, evaluation  
+├── static/                       app styling  
+├── templates/                     HTML interface  
+└── README.md                
 
 
 
 
- Getting Started
+ Model Architecture
 
-Install dependencies:
+• Base model: VGG19 (pretrained on ImageNet)
+• Layers unfrozen: last convolution block
+• Custom classifier head:
+– Flatten
+– Dense layers with ReLU
+– Dropout to reduce overfitting
+– Softmax output
 
+The model is optimized using Adam and categorical cross-entropy.
+
+
+ Training Process
+
+• Data Augmentation:
+Random rotations, flips, zoom, brightness shifts
+
+• Training Metrics:
+Accuracy, loss curves, confusion matrix (included in notebook)
+
+• Results:
+Stable convergence with strong test accuracy for tumor / no-tumor prediction
+
+
+
+ How to Run the Web App
+1. Install dependencies:
 pip install -r requirements.txt
 
-
-Run the application:
-
+2. Run the Flask app:
 python app.py
 
+3. Upload an MRI image
 
-Then open your browser and go to:
+The model returns the predicted class and confidence score.
 
-http://127.0.0.1:5000/
 
---------------------------------------------------------------------------------------
+Example Workflow
 
- Built With
+Preprocess & clean dataset
 
-Python
+Train VGG19 with fine-tuning
 
-TensorFlow / Keras
+Evaluate model with test data
 
-Flask
+Export .h5 model
 
-OpenCV
+Deploy with Flask → lightweight medical inference tool
 
-PIL
+
+Why This Project Matters
+
+Medical imaging is one of the toughest real-world ML challenges.
+This project shows your ability to:
+
+• Work with imperfect real-world data
+• Use advanced deep learning architectures
+• Deploy models as usable applications
+• Understand evaluation and generalization
+• Build a full ML pipeline from zero to deployment
